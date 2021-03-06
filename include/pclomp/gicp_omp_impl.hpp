@@ -1,7 +1,6 @@
 /*
  * Software License Agreement (BSD License)
  *
- *  Copyright (c) 2021 Shivam Pandey
  *  Point Cloud Library (PCL) - www.pointclouds.org
  *  Copyright (c) 2010, Willow Garage, Inc.
  *  Copyright (c) 2012-, Open Perception, Inc.
@@ -44,6 +43,7 @@
 #include <atomic>
 #include <pcl/registration/boost.h>
 #include <pcl/registration/exceptions.h>
+#include "pclomp/gicp_omp.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 template <typename PointSource, typename PointTarget>
@@ -220,7 +220,7 @@ void pclomp::GeneralizedIterativeClosestPoint<PointSource, PointTarget>::
   const double gradient_tol = 1e-2;
   OptimizationFunctorWithIndices functor(this);
   BFGS<OptimizationFunctorWithIndices> bfgs_event(functor);
-  bfgs_event.para.sigma = 0.01;
+  bfgs_event.parameters.sigma = 0.01;
   bfgs_event.parameters.rho = 0.01;
   bfgs_event.parameters.tau1 = 9;
   bfgs_event.parameters.tau2 = 0.05;
